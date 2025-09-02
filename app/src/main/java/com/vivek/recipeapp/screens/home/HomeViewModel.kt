@@ -5,8 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vivek.recipeapp.data.remote.gateway.RecipeApiService
-import com.vivek.recipeapp.data.local.RecipeDatabase
 import com.vivek.recipeapp.domain.models.Recipe
 import com.vivek.recipeapp.domain.repository.RecipeRepository
 import com.vivek.recipeapp.utils.Resource
@@ -30,7 +28,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onEvent(event: HomeScreenEvent) {
-        when(event) {
+        when (event) {
             is HomeScreenEvent.Refresh -> {
                 getPopularRecipes()
                 getAllRecipes(state.searchQuery)
@@ -41,7 +39,8 @@ class HomeViewModel @Inject constructor(
             }
 
             is HomeScreenEvent.OnSearchQuery -> {
-                state = state.copy(searchQuery = event.query, isSearching = event.query.isNotBlank())
+                state =
+                    state.copy(searchQuery = event.query, isSearching = event.query.isNotBlank())
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
                     delay(500L) // Debounce search
@@ -63,7 +62,7 @@ class HomeViewModel @Inject constructor(
     private fun getAllRecipes() {
         viewModelScope.launch {
             repo.getAllRecipes().collect { result ->
-                when(result) {
+                when (result) {
                     is Resource.Success -> {
                         result.data?.let { recipes ->
                             state = state.copy(
@@ -72,12 +71,14 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                     }
+
                     is Resource.Error -> {
                         state = state.copy(
                             error = result.message ?: "Unknown error occurred",
                             isLoading = false
                         )
                     }
+
                     is Resource.Loading -> {
                         state = state.copy(isLoading = result.isLoading)
                     }
@@ -90,23 +91,25 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val searchQuery = query?.trim()?.lowercase()
 
-            repo.searchRecipes(searchQuery?.ifEmpty { "chicken" } ?: "fish" )
+            repo.searchRecipes(searchQuery?.ifEmpty { "chicken" } ?: "fish")
                 .collect { result ->
-                    when(result) {
+                    when (result) {
                         is Resource.Success -> {
                             result.data?.let { recipes ->
                                 state = state.copy(
-                                    allRecipes =  recipes,
+                                    allRecipes = recipes,
                                     error = ""
                                 )
                             }
                         }
+
                         is Resource.Error -> {
                             state = state.copy(
                                 error = result.message ?: "Unknown error occurred",
                                 isLoading = false
                             )
                         }
+
                         is Resource.Loading -> {
                             state = state.copy(isLoading = result.isLoading)
                         }
@@ -120,7 +123,7 @@ class HomeViewModel @Inject constructor(
             repo
                 .getPopularRecipes()
                 .collect { result ->
-                    when(result) {
+                    when (result) {
                         is Resource.Success -> {
                             result.data?.let { recipes ->
                                 state = state.copy(
@@ -129,12 +132,14 @@ class HomeViewModel @Inject constructor(
                                 )
                             }
                         }
+
                         is Resource.Error -> {
                             state = state.copy(
                                 error = result.message ?: "Unknown error occurred",
                                 isPopularRecipesLoading = false
                             )
                         }
+
                         is Resource.Loading -> {
                             state = state.copy(isPopularRecipesLoading = result.isLoading)
                         }

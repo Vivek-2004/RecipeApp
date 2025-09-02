@@ -21,7 +21,7 @@ interface RecipeApiService {
     ): SearchRecipeResponseDTO
 
     companion object {
-        const val API_KEY = "a47376ab5cb1482295b5279dd65995a2"
+        const val API_KEY = "f382c0efb09948a7bf9263bb2b84ad51"
         const val BASE_URL = "https://api.spoonacular.com/recipes/"
     }
 

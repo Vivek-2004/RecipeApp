@@ -7,8 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.vivek.recipeapp.screens.favourites.FavoriteScreen
 import com.vivek.recipeapp.screens.home.HomeScreen
-import com.vivek.recipeapp.screens.home.test
 
 @Composable
 fun RecipeApp() {
@@ -22,18 +22,11 @@ fun RecipeApp() {
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(NavigationDestination.Home.name) {
-                HomeScreen(
-                    onFavoriteToggle = { recipe ->
-//                        recipe.isFavourite = !recipe.isFavourite
-                    }
-                )
+                HomeScreen()
             }
 
             composable(NavigationDestination.Favourite.name) {
-                test()
-//                FavoritesScreen(
-//                    recipes = recipes.filter { it.isFavorite }
-//                )
+                FavoriteScreen()
             }
         }
     }

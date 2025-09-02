@@ -26,11 +26,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.vivek.recipeapp.data.remote.dto.RecipeResponseDTO
+import com.vivek.recipeapp.domain.models.Recipe
 
 @Composable
 fun AllRecipeListItem(
-    recipe: RecipeResponseDTO,
+    recipe: Recipe,
     onFavoriteClick: () -> Unit
 ) {
     Card(
@@ -75,10 +75,7 @@ fun AllRecipeListItem(
             }
 
             IconButton(
-                onClick = {
-                    onFavoriteClick()
-                    recipe.isFavourite = !recipe.isFavourite
-                },
+                onClick = onFavoriteClick,
                 modifier = Modifier.width(28.dp).height(50.dp)
             ) {
                 Icon(

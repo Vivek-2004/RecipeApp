@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.vivek.recipeapp.data.remote.dto.RecipeResponseDTO
+import com.vivek.recipeapp.domain.models.Recipe
 
 @Composable
 fun HomeScreen(
@@ -70,8 +70,10 @@ fun HomeScreen(
             }
 
             TextField(
-                value = "",
-                onValueChange = {},
+                value = homeViewModel.state.searchQuery ?: "",
+                onValueChange = { query ->
+                    homeViewModel.onEvent(HomeScreenEvent.OnSearchQuery(query))
+                },
                 placeholder = {
                     Text("Search any recipe", color = Color.Gray)
                 },
@@ -131,7 +133,9 @@ fun HomeScreen(
                 items(homeViewModel.state.allRecipes) { recipe ->
                     AllRecipeListItem(
                         recipe = recipe,
-                        onFavoriteClick = { onFavoriteToggle(recipe) }
+                        onFavoriteClick = {
+                            homeViewModel.onEvent(HomeScreenEvent.ToggleFavorite(recipe))
+                        }
                     )
                 }
             }
