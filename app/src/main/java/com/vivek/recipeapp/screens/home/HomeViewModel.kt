@@ -25,6 +25,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         getAllRecipes()
+        getPopularRecipes()
     }
 
     fun onEvent(event: HomeScreenEvent) {
@@ -43,7 +44,7 @@ class HomeViewModel @Inject constructor(
                     state.copy(searchQuery = event.query, isSearching = event.query.isNotBlank())
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
-                    delay(500L) // Debounce search
+                    delay(700L)
                     getAllRecipes(event.query)
                 }
             }

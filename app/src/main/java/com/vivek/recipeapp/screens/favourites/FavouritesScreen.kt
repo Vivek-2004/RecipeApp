@@ -72,7 +72,6 @@ fun FavoriteScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Content
         when {
             state.isLoading -> {
                 Box(

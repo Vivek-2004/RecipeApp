@@ -75,6 +75,7 @@ class RecipeRepositoryImpl @Inject constructor(
             emit(Resource.Loading(true))
             try {
                 val remoteRecipes = api.getPopularRecipes().recipes
+                println(remoteRecipes.toString()) //
                 val favouriteIds = dao.getAllFavouritesIds()
 
                 val recipes = remoteRecipes.map { dto ->
