@@ -31,8 +31,7 @@ import com.vivek.recipeapp.data.remote.dto.RecipeResponseDTO
 
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel = hiltViewModel(),
-    onFavoriteToggle: (RecipeResponseDTO) -> Unit
+    homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     if (homeViewModel.state.isLoading) {
         Box(
